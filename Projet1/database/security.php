@@ -12,7 +12,7 @@
     private PDOStatement $statementDeleteSession;
 
     function __construct(private PDO $pdo)
-    { // preparation des données pour l'authentication
+    { // preparation of data for authentication
       $this->statementRegister = $pdo->prepare('INSERT INTO user VALUES(
         DEFAULT,
         :firstname,
@@ -31,7 +31,7 @@
       $this->statementDeleteSession = $pdo->prepare('DELETE FROM session WHERE id=:id');
     }
 
-    // reccuperation et protection de la session + temps de connexion automatique
+   // recovery and protection of the session + automatic connection time
     function login(string $userId): void
     {
       $sessionId = bin2hex(random_bytes(32));
@@ -46,7 +46,7 @@
 
     function register(array $user): void
     {
-      // enregistrement de l'utilisateur + hashage du mdp
+      // user registration + mdp hash
       $hashPassword = password_hash($user['password'], PASSWORD_ARGON2I);
       $this->statementRegister->bindValue(':firstname', $user['firstname']);
       $this->statementRegister->bindValue(':lastname', $user['lastname']);
@@ -58,7 +58,7 @@
 
     function isLoggedin(): array | false
     {
-      //connexion de l'utilisateur avec protection
+     //user login with protection
       $sessionId = $_COOKIE['session'] ?? '';
       $signature = $_COOKIE['signature'] ?? '';
 
@@ -80,7 +80,8 @@
 
     function logout(string $sessionId): void
     {
-      //deconnexion
+    
+//disconnect
       $this->statementDeleteSession->bindValue(':id', $sessionId);
       $this->statementDeleteSession->execute();
       setcookie('session', '', time() - 1);
@@ -90,7 +91,7 @@
 
     function getUserFromEmail(string $email): array | false
     {
-      //reccupération du compte via le mail
+//recovery of the account via email
       $this->statementReadUserFromEmail->bindValue(':email', $email);
       $this->statementReadUserFromEmail->execute();
       return $this->statementReadUserFromEmail->fetch();
