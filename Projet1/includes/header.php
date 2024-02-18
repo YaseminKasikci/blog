@@ -1,7 +1,7 @@
 <?php
 $currentUser = $currentUser ?? false;
 ?>
-<!-- en media query -->
+<!-- media query -->
 <header>
   <a href="/" class="logo">Blog</a>
   <div class="header-mobile">
@@ -30,7 +30,7 @@ $currentUser = $currentUser ?? false;
     </ul>
   </div>
 
-  <!-- grand ecran pc -->
+<!-- large pc screen -->
   <ul class="header-menu">
     <?php if ($currentUser) : ?>
       <li class=<?= $_SERVER['REQUEST_URI'] === '/form-article.php' ? 'active' : '' ?>>
