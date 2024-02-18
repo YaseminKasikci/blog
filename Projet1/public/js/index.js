@@ -7,4 +7,4 @@ headerMobileButton.addEventListener('click', () => {
   headerMobileList.classList.toggle('show');
 })
 
-// menu déroulant en mobile
+// drop-down menu in mobile
