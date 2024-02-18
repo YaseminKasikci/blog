@@ -1,9 +1,9 @@
 <?php
-// reccuperation des DB + Authentification
+// recovery of DB + Authentication
 require_once './database/database.php';
 $authDB = require_once './database/security.php';
 
-// erreur des champs de form
+// form field error
 const ERROR_REQUIRED = ' Veuillez renseigner ce champs';
 const ERROR_PASSWORD_TOO_SHORT = 'Le mot de passe doit faire au moins 6 caratères';
 const ERROR_PASSWORD_MISMATCH = 'Le mot de passe n\'est pas valide';
@@ -15,7 +15,7 @@ $errors = [
   'password' => ''
 ];
 
-// NETTOYAGE ET PURIFICATION
+// CLEANING AND PURIFICATION
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $input = filter_input_array(INPUT_POST, [
     'email' => FILTER_SANITIZE_EMAIL,
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $email = $input['email'] ?? '';
   $password = $_POST['password'] ?? '';
 
-  /// CONDITIONS D'ERREUR
+/// ERROR CONDITIONS
   if (!$email) {
     $errors['email'] = ERROR_REQUIRED;
   } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors['password'] = ERROR_PASSWORD_TOO_SHORT;
   }
 
-  // verification de l'existance du mail + reccuperation et verifiaction du match avec le password si pas d'erreur, sinon redirection
+ // verification of the existence of the email + recovery and verification of the match with the password if no error, otherwise redirection
   if (empty(array_filter($errors, fn ($e) => $e !== ''))) {
     $user = $authDB->getUserFromEmail($email);
 
