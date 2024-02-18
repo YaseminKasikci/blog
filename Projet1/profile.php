@@ -8,7 +8,7 @@ $currentUser = $authDB->isLoggedin();
 if (!$currentUser) {
   header('Location: /');
 }
-//reccupération des article par utilisateur
+//recovery of articles per user
 $articles = $articleDB->fetchUserArticle($currentUser['id']);
 ?>
 
@@ -49,7 +49,7 @@ $articles = $articleDB->fetchUserArticle($currentUser['id']);
           <?php foreach ($articles as $a) : ?>
             <li>
               <span><?= $a['title'] ?></span>
-              <!-- redirection si suppression ou modification -->
+<!-- redirect if deleted or modified -->
               <div class="article-actions">
                 <a href="/delete-article.php?id=<?= $a['id'] ?>" class="btn btn-secondary btn-small">Supprimer</a>
                 <a href="/form-article.php?id=<?= $a['id'] ?>" class="btn btn-primary btn-small">Modifier</a>
