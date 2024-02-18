@@ -13,7 +13,7 @@ $selectedCat = '';
 $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $selectedCat = $_GET['cat'] ?? '';
 
-// REGROUPE LES CATEGORIES
+// GROUP THE CATEGORIES
 if (count($articles)) {
   $cattmp = array_map(fn ($a) => $a['category'], $articles);
   $categories = array_reduce($cattmp, function ($acc, $cat) {
@@ -26,7 +26,7 @@ if (count($articles)) {
   }, []);
 
 
-  // REGROUPE LES ARTICLES PAR CATEGORIES
+// GROUP ARTICLES BY CATEGORIES
   $articlePerCategories = array_reduce($articles, function ($acc, $article) {
     if (isset($acc[$article['category']])) {
       $acc[$article['category']] = [...$acc[$article['category']], $article];
