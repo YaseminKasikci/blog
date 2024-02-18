@@ -18,7 +18,7 @@ $errors = [
   'content' => '',
 ];
 $category = '';
-//RECCUPERATION
+//RECOVERY
 $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $id = $_GET['id'] ?? '';
 if ($id) {
@@ -34,7 +34,7 @@ if ($id) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // NETTOYAGE ET PURIFICATION
+// CLEANING AND PURIFICATION
   $_POST = filter_input_array(INPUT_POST, [
     'title' => FILTER_SANITIZE_SPECIAL_CHARS,
     'image' => FILTER_SANITIZE_URL,
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $category = $_POST['category'] ?? '';
   $content = $_POST['content'] ?? '';
 
-  /// CONDITIONS D'ERREUR
+/// ERROR CONDITIONS
   if (!$title) {
     $errors['title'] = ERROR_REQUIRED;
   } elseif (mb_strlen($title) < 5) {
@@ -71,7 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } elseif (mb_strlen($content) < 10) {
     $errors['content'] = ERROR_CONTENT_TOO_SHORT;
   }
-  //SAUVEGARDE
+
+
+//BACKUP
   if (empty(array_filter($errors, fn ($e) => $e !== ''))) {
     if ($id) {
       $article['title'] = $title;
