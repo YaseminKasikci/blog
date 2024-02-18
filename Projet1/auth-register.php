@@ -1,5 +1,5 @@
 <?php
-// reccuperation des DB + Authentification
+// recovery of DB + Authentication
 $pdo = require_once './database/database.php';
 $authDB = require_once './database/security.php';
 
@@ -18,7 +18,7 @@ $errors = [
   'confirmpassword' => ''
 ];
 
-// NETTOYAGE ET PURIFICATION
+// CLEANING AND PURIFICATION
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $input = filter_input_array(INPUT_POST, [
     'firstname' => FILTER_SANITIZE_SPECIAL_CHARS,
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $password = $_POST['password'] ?? '';
   $confirmpassword = $_POST['confirmpassword'] ?? '';
 
-  /// CONDITIONS D'ERREUR
+/// ERROR CONDITIONS
   if (!$firstname) {
     $errors['firstname'] = ERROR_REQUIRED;
   } elseif (mb_strlen($firstname) < 2) {
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors['confirmpassword'] = ERROR_PASSWORD_MISMATCH;
   }
 
-  // reccuperation des donnes si pas d'erreur sinon redirection
+// data recovery if no error otherwise redirection
   if (empty(array_filter($errors, fn ($e) => $e !== ''))) {
     $authDB->register([
       'firstname' => $firstname,
